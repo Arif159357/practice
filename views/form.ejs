@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>newform-</title>
+  </head>
+  <body>
+    <h1>New Article</h1>
+    <label for="title">Name</label>
+    <input type="text" id="title" />
+    <label for="content">Salary</label>
+    <input type="text" id="content" />
+    <button id="submit">Submit</button>
+
+    <label for="title">Name</label>
+    <input type="text" id="seName" />
+    <button id="sea">Search</button>
+    <ul>
+      <% for(var i =0; i < emp.length; i++){ %>
+        <li><%= emp[i].name %></li>
+      <% } %>
+    </ul>
+    
+    <div id="result"></div>
+ 
+    
+
+    
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+      var employee = { name: "", salary: "" };
+      $("#submit").click(function() {
+        employee.name = $("#title").val();
+        employee.salary = $("#content").val();
+        $.ajax({
+          method: "POST",
+          url: "/employee",
+          data: employee 
+        })
+          .done(response => console.log(response))
+          .fail(response => console.log(response));
+      });
+
+      $("#sea").click(function(){
+        var name = $("#seName").val()
+        // console.log(name);
+        
+        $.ajax({
+          method:'POST',
+          url: '/employee/find_data/'+name
+        }).done(res=>{
+          console.log(res.name);
+          $('#result').append(res.name);
+
+          
+        })
+
+        // let href = '/employee/find_data/' + name;
+
+      	// window.location.href = href;
+
+      })
+
+    </script>
+  </body>
+</html>
